@@ -1,56 +1,57 @@
+function getComputerChoice(){
+    let number = Math.round(Math.random()*2);
+    if(number === 0) return 'rock';
+    else if(number === 1) return 'paper';
+    return 'scissors';
+}
+
+
+function getHumanChoice(){
+    let choice = prompt("Enter your choice (rock, paper or scissor): ")
+    choice = choice.toLocaleLowerCase()
+    return choice;
+}
+
 let humanScore = 0,
-    computerScore = 0
+    computerScore = 0;
 
-let getComputerChoice = () => {
-    return Math.floor(Math.random() * 3 + 1)
+let playRound = (humanChoice, computerChoice) =>{
+    if(humanChoice === computerChoice){
+        console.log("-------------------------------");
+        console.log(`human choice: ${humanChoice}, computer choice ${computerChoice}`);
+        console.log(`human score: ${humanScore}, computer score ${computerScore}`);
+        console.log("TIE");
+        return;
+    }else if(humanChoice === 'rock' && computerChoice === 'scissors' || humanChoice === 'scissors' && computerChoice === 'paper' || humanChoice === 'paper' && computerChoice === 'rock'){
+        humanScore += 1;
+        console.log("-------------------------------");
+        console.log(`human choice: ${humanChoice}, computer choice ${computerChoice}`);
+        console.log(`human score: ${humanScore}, computer score ${computerScore}`);
+        console.log('HUMAN WON');
+        return;
+    }
+    computerScore += 1;
+    console.log("-------------------------------");
+    console.log(`human choice: ${humanChoice}, computer choice ${computerChoice}`);
+    console.log(`human score: ${humanScore}, computer score ${computerScore}`);
+    console.log('COMPUTER WON');
 }
 
-let getHumanChoice = () => {
-    while(1){
-        let choice = prompt("Enter a number")
-        if(choice < 4 && choice > 0){
-            return choice
-        }else{
-            console.log("invalid number");
-        }
-    }
-}
 
-function playRound(computer, human){
-
-    if(human === computer){
-        console.log("It's a draw")
-    }
-    else if((human === 1 && computer === 3) ||
-     (human === 2 && computer === 1) ||
-    (human === 3 && computer === 2)){
-        console.log("human won");
-        humanScore += 1
-    }
-    else{
-        console.log("computer won");
-        computerScore += 1
-    }
-}
 
 function playGame(){
-    let count = 0;
-    while(count < 4){
-        playRound(getComputerChoice(), parseInt(getHumanChoice()))
-        count += 1
+    for(let i = 0; i < 5; i++){
+        playRound(getHumanChoice(), getComputerChoice());
     }
+    if(humanScore === computerScore){
+        console.log(`It's a tie`);
+        return;
+    }
+    humanScore > computerScore ? console.log('human won') : console.log('computer won');;
 }
 
-playGame()
 
-console.log("human",humanScore);
-console.log("computer",computerScore);
 
-if(humanScore === computerScore){
-    console.log("game is draw");
-}
-else if(humanScore > computerScore){
-    console.log("human won the game");
-}else{
-    console.log("computer won the game");
-}
+
+
+playGame();
